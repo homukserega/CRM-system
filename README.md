@@ -1,6 +1,15 @@
 # CRM-system
 
-<i>Для запуска БД Необходимо установить <b>Docker</b></i>
+#### Необходимые компоненты:
+* python
+* Docker
+* poetry
+
+## Установка виртуального окружения
+
+> poetry config virtualenvs.create true
+
+> poetry sync --all-groups
 
 ## Настройка БД
 1. Скопировать env-template в .env:
@@ -14,8 +23,14 @@
 
 ## Запуск crm системы:
  * Запуск
-> python crm/manage.py runserver 0.0.0.0:8000
- * Выполнение миграций
-> python crm/manage.py migrate
+
+из каталога crm/ выполнить команду
+
+> python manage.py runserver 0.0.0.0:8000
+ * Выполнение миграций БД
+
+из каталога crm/ выполнить команду
+
+> python manage.py migrate
 
 # ДЕРЖИТЕ В КУРСЕ ДЕЛА
