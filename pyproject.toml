@@ -19,8 +19,8 @@ optional = true
 
 [tool.poetry.group.production.dependencies]
 django = "^6.0.2"
-psycopg2-binary = "^2.9.12"
 python-dotenv = "^1.2.2"
+psycopg = {extras = ["binary"], version = "^3.3.4"}
 
 [tool.poetry.group.test]
 optional = true
