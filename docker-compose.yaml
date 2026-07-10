@@ -1,0 +1,28 @@
+services:
+  test_db:
+    image: postgres:18.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+    ports:
+      - ${POSTGRES_EXT_PORT}:${POSTGRES_INT_PORT}
+    volumes:
+      - ./crm-db:/var/lib/postgresql/
+      - ./postgresql_conf/postgresql.conf:/etc/postgresql/postgresql.conf
+    command: >
+      postgres -c config_file=/etc/postgresql/postgresql.conf
+    stop_signal: SIGKILL
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB_NAME} || EXIT 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      # start_period: 1s
+    networks:
+      - crm-system-network
+
+networks:
+  crm-system-network:
+    driver: bridge

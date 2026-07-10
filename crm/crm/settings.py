@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 from pathlib import Path
 
-POSTGRES_DB_NAME = os.getenv("DATABASE_NAME", "admin-db")
+POSTGRES_DB_NAME = os.getenv("POSTGRES_DB_NAME", "admin-db")
 POSTGRES_USER = os.getenv('POSTGRES_USER', 'admin')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'admin')
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
