@@ -9,7 +9,7 @@ services:
     ports:
       - ${POSTGRES_EXT_PORT}:${POSTGRES_INT_PORT}
     volumes:
-      - ./crm-db:/var/lib/postgresql/
+      - ./dababase-crm:/var/lib/postgresql/
       - ./postgresql_conf/postgresql.conf:/etc/postgresql/postgresql.conf
     command: >
       postgres -c config_file=/etc/postgresql/postgresql.conf
