@@ -9,8 +9,17 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+import os
+
+from dotenv import load_dotenv
 
 from pathlib import Path
+
+POSTGRES_DB_NAME = os.getenv("DATABASE_NAME", "admin-db")
+POSTGRES_USER = os.getenv('POSTGRES_USER', 'admin')
+POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'admin')
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
+POSTGRES_EXT_PORT = os.getenv("POSTGRES_EXT_PORT", "5432")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,8 +83,12 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': POSTGRES_DB_NAME,        # Must be created in Postgres first
+        'USER': POSTGRES_USER,           # Database user
+        'PASSWORD': POSTGRES_PASSWORD,   # User password
+        'HOST': POSTGRES_HOST,           # Use 'localhost' or your database IP
+        'PORT': POSTGRES_EXT_PORT,       # Default PostgreSQL port is 5432
     }
 }
 
