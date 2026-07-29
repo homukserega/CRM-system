@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'myapp.User'
+AUTH_USER_MODEL = 'registration.User'
 
 
 # Internationalization
@@ -152,6 +152,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/' # префикс URL-адреса для статических файлов
 STATIC_ROOT = BASE_DIR / "static/" # путь к общей статитч. папке, формируемой при запуске команды collectstatic
+
+UPLOADS_DIR = BASE_DIR / 'uploads/static'
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'uploads/static'),
