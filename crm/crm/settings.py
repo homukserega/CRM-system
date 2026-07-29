@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+import logging.config
 
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
+from pathlib import Path
+
 load_dotenv()
 
 POSTGRES_DB = os.getenv("POSTGRES_DB", "admin-db")
@@ -20,23 +24,38 @@ POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'admin')
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_EXT_PORT = os.getenv("POSTGRES_EXT_PORT", 5432)
 
-from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&4$)_(io5n3bg9bezz46$hsvshixq35x_km!f0$#7b6*w6h)$9'
-
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",
+    'django-insecure-hvxn%qq=gyw^4*o2lo1#bw0=wh#ux9s8h!=@c608arf_gz3+^7')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", True)
+LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
+DJANGO_ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "0.0.0.0",
+] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",") # сущ. хосты + из .env
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "0.0.0.0",
+]
+
+if DEBUG:
+    import socket
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS.append("10.0.2.2")
+    INTERNAL_IPS.extend(
+        [ip[: ip.rfind(".")] + ".1" for ip in ips]
+    )
 
 # Application definition
 
@@ -47,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration.apps.RegistrationConfig',
 ]
 
 MIDDLEWARE = [
@@ -112,6 +132,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'myapp.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
@@ -128,4 +150,44 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/' # префикс URL-адреса для статических файлов
+STATIC_ROOT = BASE_DIR / "static/" # путь к общей статитч. папке, формируемой при запуске команды collectstatic
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'uploads/static'),
+] # список доп. нестандартных путей к статич. файлам, для сбора и отладки
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "uploads/static"
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# LOGIN_REDIRECT_URL = reverse_lazy("registration:about-me") ??
+LOGIN_URL = reverse_lazy("registration:login")
+
+LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
+
+logging.config.dictConfig({
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
+    },
+    "loggers": {
+        "": {
+            "level": LOGLEVEL,
+            "handlers": [
+                "console",
+            ],
+        },
+    },
+})
