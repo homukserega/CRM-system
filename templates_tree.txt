@@ -1,0 +1,41 @@
+crm/templates
+├── ads
+│   ├── ads-create.html
+│   ├── ads-delete.html
+│   ├── ads-detail.html
+│   ├── ads-edit.html
+│   ├── ads-list.html
+│   └── ads-statistic.html
+├── _base.html
+├── contracts
+│   ├── contracts-create.html
+│   ├── contracts-delete.html
+│   ├── contracts-detail.html
+│   ├── contracts-edit.html
+│   └── contracts-list.html
+├── customers
+│   ├── customers-create.html
+│   ├── customers-delete.html
+│   ├── customers-detail.html
+│   ├── customers-edit.html
+│   └── customers-list.html
+├── leads
+│   ├── leads-create.html
+│   ├── leads-delete.html
+│   ├── leads-detail.html
+│   ├── leads-edit.html
+│   └── leads-list.html
+├── products
+│   ├── products-create.html
+│   ├── products-delete.html
+│   ├── products-detail.html
+│   ├── products-edit.html
+│   └── products-list.html
+├── registration
+│   └── login.html
+├── static
+│   └── style.css
+└── users
+    └── index.html
+
+9 directories, 30 files

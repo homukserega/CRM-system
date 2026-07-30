@@ -90,7 +90,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates_only' / 'templates_only',  # ваш путь
+            BASE_DIR / 'templates',  # ваш путь
         ],
         'APP_DIRS': True,  # искать шаблоны в папках templates каждого приложения
         'OPTIONS': {
