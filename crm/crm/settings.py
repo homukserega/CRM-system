@@ -165,6 +165,7 @@ UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'uploads/static'),
+    BASE_DIR / 'templates_only' / 'templates_only' / 'static',
 ] # список доп. нестандартных путей к статич. файлам, для сбора и отладки
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
