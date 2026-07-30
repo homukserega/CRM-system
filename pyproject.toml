@@ -21,6 +21,7 @@ optional = true
 django = "^6.0.2"
 python-dotenv = "^1.2.2"
 psycopg = {extras = ["binary"], version = "^3.3.4"}
+django-debug-toolbar = "^7.0.0"
 
 [tool.poetry.group.test]
 optional = true

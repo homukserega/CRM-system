@@ -6,10 +6,14 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
 
+class AboutMeView(TemplateView):
+    template_name = "registration/about-me.html"
+
+
 class RegisterView(CreateView):
     form_class = UserCreationForm
-    template_name = "myauth/register.html"
-    success_url = reverse_lazy("myauth:about-me")
+    template_name = "registration/login.html"
+    success_url = reverse_lazy("registration:about-me")
 
     def form_valid(self, form):
         response = super().form_valid(form)
