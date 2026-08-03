@@ -21,8 +21,22 @@ load_dotenv()
 POSTGRES_DB = os.getenv("POSTGRES_DB", "admin-db")
 POSTGRES_USER = os.getenv('POSTGRES_USER', 'admin')
 POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'admin')
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
-POSTGRES_EXT_PORT = os.getenv("POSTGRES_EXT_PORT", 5432)
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "db")
+POSTGRES_INT_PORT = os.getenv("POSTGRES_INT_PORT", 5432)
+
+# Database
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': POSTGRES_DB,        # Must be created in Postgres first
+        'USER': POSTGRES_USER,           # Database user
+        'PASSWORD': POSTGRES_PASSWORD,   # User password
+        'HOST': POSTGRES_HOST,           # Use 'localhost' or your database IP
+        'PORT': POSTGRES_INT_PORT,       # Default PostgreSQL int port is 5432
+    }
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,21 +119,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'crm.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': POSTGRES_DB,        # Must be created in Postgres first
-        'USER': POSTGRES_USER,           # Database user
-        'PASSWORD': POSTGRES_PASSWORD,   # User password
-        'HOST': POSTGRES_HOST,           # Use 'localhost' or your database IP
-        'PORT': POSTGRES_EXT_PORT,       # Default PostgreSQL port is 5432
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
