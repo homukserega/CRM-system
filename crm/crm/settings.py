@@ -88,8 +88,11 @@ INSTALLED_APPS = [
 
     'registration.apps.RegistrationConfig',
     'products.apps.ProductsConfig',
+    'contracts.apps.ContractsConfig',
 
 ]
+
+BASE_PRODUCT_MODEL = 'products.Product'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
