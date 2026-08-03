@@ -11,10 +11,8 @@ __pycache__/
 # C extensions
 *.so
 
-# Poetry
-poetry.toml
-pyproject.lock
-poetry.lock
+# UV
+*lock
 
 # Distribution / packaging
 .Python
@@ -70,7 +68,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-dababase-crm
+dababase-crm/
 
 # Flask stuff:
 instance/
