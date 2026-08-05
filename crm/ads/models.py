@@ -5,12 +5,7 @@ from django.urls import reverse
 
 class Ad(models.Model):
     class Meta:
-        permissions = [
-            ("view_ad", "Can view ad"),
-            ("add_ad", "Can add ad"),
-            ("change_ad", "Can change ad"),
-            ("delete_ad", "Can delete ad"),
-        ]
+        verbose_name_plural = 'Ads'
 
     name = models.CharField(max_length=255, blank=False, null=False, db_index=True)
     product = models.ForeignKey(

@@ -4,13 +4,7 @@ from django.conf import settings
 
 class Customer(models.Model):
     class Meta:
-        permissions = [
-            ("view_customer", "Can view customer"),
-            ("add_customer", "Can add customer"),
-            ("change_customer", "Can change customer"),
-            ("delete_customer", "Can delete customer"),
-        ]
-
+        verbose_name_plural = 'Customers'
 
     customer = models.OneToOneField(
         settings.BASE_LEAD_MODEL,

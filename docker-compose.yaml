@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./db:/var/lib/postgresql/
+      - db_data:/var/lib/postgresql/
       - ./postgresql_conf/postgresql.conf:/etc/postgresql/postgresql.conf
     command: >
       postgres -c config_file=/etc/postgresql/postgresql.conf
@@ -26,3 +26,6 @@ services:
 networks:
   crm-system-network:
     driver: bridge
+
+volumes:
+  db_data:

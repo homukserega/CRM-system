@@ -5,12 +5,7 @@ from django.urls import reverse
 
 class Lead(models.Model):
     class Meta:
-        permissions = [
-            ("view_lead", "Can view lead"),
-            ("add_lead", "Can add lead"),
-            ("change_lead", "Can change lead"),
-            ("delete_lead", "Can delete lead"),
-        ]
+        verbose_name_plural = 'Leads'
 
     first_name = models.CharField(max_length=255, null=False, blank=True)
     last_name = models.CharField(max_length=255, null=False, blank=True)

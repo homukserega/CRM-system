@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     # 'debug_toolbar',
-    # 'registration.apps.RegistrationConfig',
+    'accounts_and_roles.apps.AccountsAndRolesConfig',
     'products.apps.ProductsConfig',
     'contracts.apps.ContractsConfig',
     'ads.apps.AdsConfig',
@@ -153,6 +153,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+BASE_PRODUCT_MODEL = 'products.Product'
+BASE_AD_MODEL = 'ads.Ad'
+BASE_LEAD_MODEL = 'leads.Lead'
+BASE_CONTRACT_MODEL = 'contracts.Contract'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -4,12 +4,7 @@ from django.conf import settings
 
 class Contract(models.Model):
     class Meta:
-        permissions = [
-            ("view_contract", "Can view contract"),
-            ("add_contract", "Can add contract"),
-            ("change_contract", "Can change contract"),
-            ("delete_contract", "Can delete contract"),
-        ]
+        verbose_name_plural = 'Contracts'
 
     name = models.CharField(max_length=255, null=True, blank=True)
     product = models.ForeignKey(
