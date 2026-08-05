@@ -4,26 +4,15 @@ version = "0.0.1"
 description = ""
 readme = "README.md"
 authors = [
-    {name = "Сергей Хомук", email = "homuk.serega@yandex.by"}
+    { name = "Сергей Хомук", email = "homuk.serega@yandex.by" }
 ]
 requires-python = ">=3.12"
 dependencies = [
     "django>=6.0.2,<7.0.0",
     "python-dotenv>=1.2.2,<2.0.0",
     "psycopg[binary]>=3.3.4,<4.0.0",
-]
-
-[project.optional-dependencies]
-production = [
+    "gunicorn[standard]>=26.0.0,<27.0.0",
+    "watchdog>=6.0.0,<7.0.0",
     "django-debug-toolbar>=7.0.0,<8.0.0",
-]
-test = [
     "pylint>=4.0.6,<5.0.0",
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["crm_system"]
