@@ -93,6 +93,9 @@ INSTALLED_APPS = [
 ]
 
 BASE_PRODUCT_MODEL = 'products.Product'
+BASE_AD_MODEL = 'ads.Ad'
+BASE_LEAD_MODEL = 'leads.Lead'
+BASE_CONTRACT_MODEL = 'contracts.Contract'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Lead(models.Model):
@@ -9,3 +10,9 @@ class Lead(models.Model):
     last_name = models.CharField(max_length=255, null=False, blank=True)
     phone = models.CharField(max_length=20, blank=True, null=True, unique=True)
     email = models.EmailField(max_length=255, null=False, blank=True, unique=True)
+    ad = models.ForeignKey(
+        settings.BASE_AD_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ad",
+        blank=True,
+    )
