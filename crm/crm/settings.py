@@ -83,13 +83,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-
     # 'debug_toolbar',
-
     'registration.apps.RegistrationConfig',
     'products.apps.ProductsConfig',
     'contracts.apps.ContractsConfig',
-
+    'ads.apps.AdsConfig',
 ]
 
 BASE_PRODUCT_MODEL = 'products.Product'

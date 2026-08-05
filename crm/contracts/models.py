@@ -7,13 +7,14 @@ class Contract(models.Model):
         verbose_name_plural = "Contracts"
 
     name = models.CharField(max_length=255, null=True, blank=True)
-    product = models.ManyToManyField(
+    product = models.ForeignKey(
         settings.BASE_PRODUCT_MODEL,
-        related_name="products",
-        blank=True, null=True,
+        related_name="contract",
+        blank=True,
+        on_delete=models.CASCADE,
     )
     file = models.FileField(upload_to='documents/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    date = models.DateTimeField(auto_now=True)
-    period = models.DateTimeField(blank=True, null=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    start_date = models.DateTimeField(auto_now=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
