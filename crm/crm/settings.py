@@ -88,6 +88,8 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'contracts.apps.ContractsConfig',
     'ads.apps.AdsConfig',
+    'customers.apps.CustomersConfig',
+    'leads.apps.LeadsConfig',
 ]
 
 BASE_PRODUCT_MODEL = 'products.Product'
