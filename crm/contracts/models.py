@@ -4,7 +4,12 @@ from django.conf import settings
 
 class Contract(models.Model):
     class Meta:
-        verbose_name_plural = "Contracts"
+        permissions = [
+            ("view_contract", "Can view contract"),
+            ("add_contract", "Can add contract"),
+            ("change_contract", "Can change contract"),
+            ("delete_contract", "Can delete contract"),
+        ]
 
     name = models.CharField(max_length=255, null=True, blank=True)
     product = models.ForeignKey(
@@ -18,3 +23,4 @@ class Contract(models.Model):
     start_date = models.DateTimeField(auto_now=True)
     end_date = models.DateTimeField(blank=True, null=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+

@@ -84,18 +84,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     # 'debug_toolbar',
-    'registration.apps.RegistrationConfig',
+    # 'registration.apps.RegistrationConfig',
     'products.apps.ProductsConfig',
     'contracts.apps.ContractsConfig',
     'ads.apps.AdsConfig',
     'customers.apps.CustomersConfig',
     'leads.apps.LeadsConfig',
 ]
-
-BASE_PRODUCT_MODEL = 'products.Product'
-BASE_AD_MODEL = 'ads.Ad'
-BASE_LEAD_MODEL = 'leads.Lead'
-BASE_CONTRACT_MODEL = 'contracts.Contract'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,9 +142,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-AUTH_USER_MODEL = 'registration.User'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
