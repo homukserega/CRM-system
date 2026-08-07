@@ -1,3 +1,16 @@
 from django.contrib import admin
+from .models import Product
 
-# Register your models here.
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'cost', 'description_preview')
+    list_display_links = ('name',)
+    search_fields = ('name', 'description')
+    list_filter = ('cost',)
+    fields = ('name', 'description', 'cost')
+    readonly_fields = ('id',)
+
+    def description_preview(self, obj):
+        return obj.description[:50] + '…' if obj.description and len(obj.description) > 50 else obj.description
+    description_preview.short_description = 'Описание (кратко)'

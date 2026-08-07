@@ -140,3 +140,5 @@ dmypy.json
 
 # Jetbrains Intellij IDEA
 .idea/
+
+collect_proj_files.py
