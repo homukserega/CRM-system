@@ -142,3 +142,4 @@ dmypy.json
 .idea/
 
 collect_proj_files.py
+collect_proj_files.txt

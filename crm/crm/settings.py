@@ -83,8 +83,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django_rename_app',
     # 'debug_toolbar',
-    'accounts_and_roles.apps.AccountsAndRolesConfig',
+    'accounts.apps.AccountsConfig',
     'products.apps.ProductsConfig',
     'contracts.apps.ContractsConfig',
     'ads.apps.AdsConfig',
@@ -176,8 +177,12 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse_lazy("registration:about-me")
-LOGIN_URL = reverse_lazy("registration:login")
+# LOGIN_REDIRECT_URL = reverse_lazy("registration:about-me")
+# LOGIN_URL = reverse_lazy("registration:login")
+
+LOGIN_URL = 'accounts:login'          # или просто 'login', если не используете пространство имён
+LOGIN_REDIRECT_URL = 'home'           # имя главной страницы (определено в корневом urls.py)
+LOGOUT_REDIRECT_URL = 'accounts:login'  # перенаправление после выхода (опционально)
 
 LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
 
