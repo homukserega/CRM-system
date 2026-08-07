@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from .models import Contract
+from .forms import ContractForm
 
 
 class ContractListView(PermissionRequiredMixin, ListView):
@@ -19,7 +20,7 @@ class ContractDetailView(PermissionRequiredMixin, DetailView):
 
 class ContractCreateView(PermissionRequiredMixin, CreateView):
     model = Contract
-    fields = '__all__'
+    fields = ContractForm
     template_name = 'contracts/contracts-create.html'
     success_url = reverse_lazy('contracts:list')
     permission_required = 'contracts.add_contract'
@@ -27,7 +28,7 @@ class ContractCreateView(PermissionRequiredMixin, CreateView):
 
 class ContractUpdateView(PermissionRequiredMixin, UpdateView):
     model = Contract
-    fields = '__all__'
+    fields = ContractForm
     template_name = 'contracts/contracts-edit.html'
     success_url = reverse_lazy('contracts:list')
     permission_required = 'contracts.change_contract'

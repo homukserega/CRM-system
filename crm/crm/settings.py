@@ -163,20 +163,16 @@ BASE_CONTRACT_MODEL = 'contracts.Contract'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/' # префикс URL-адреса для статических файлов
-STATIC_ROOT = BASE_DIR / "static/" # путь к общей статитч. папке, формируемой при запуске команды collectstatic
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-UPLOADS_DIR = BASE_DIR / 'uploads/static'
-UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+STATIC_URL = 'static/' # префикс URL-адреса для статических файлов
+STATIC_ROOT = BASE_DIR / "staticfiles" # путь к общей статитч. папке, формируемой при запуске команды collectstatic
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'uploads/static'),
     BASE_DIR / 'templates',
 ] # список доп. нестандартных путей к статич. файлам, для сбора и отладки
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-
-# MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "uploads/static"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

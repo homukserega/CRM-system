@@ -13,7 +13,7 @@ class Contract(models.Model):
         blank=True,
         on_delete=models.CASCADE,
     )
-    file = models.FileField(upload_to='documents/')
+    file = models.FileField(upload_to='documents/%Y/%m/%d/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(auto_now=True)
     end_date = models.DateTimeField(blank=True, null=True)
