@@ -22,37 +22,53 @@
             </h1>
         </div>
         <ul class="list-unstyled px-2">
-            {% if perms.products.view_product %}
-            <li><a href="/products/" class="bar-item text-decoration-none px-3 py-3 d-block">
-                <span><i class="fas fa-microchip"></i></span><span class="ml-1"> Услуги</span>
-            </a></li>
+            {% if user.is_authenticated %}
+                <!-- Меню для авторизованных пользователей -->
+                {% if perms.products.view_product %}
+                <li><a href="/products/" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-microchip"></i></span><span class="ml-1"> Услуги</span>
+                </a></li>
+                {% endif %}
+                {% if perms.ads.view_ad %}
+                <li><a href="/ads/" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-ad"></i></span><span class="ml-1"> Рекламные компании</span>
+                </a></li>
+                {% endif %}
+                {% if perms.leads.view_lead %}
+                <li><a href="/leads/" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-user-clock"></i></span><span class="px-1"> Лиды</span>
+                </a></li>
+                {% endif %}
+                {% if perms.contracts.view_contract %}
+                <li><a href="/contracts/" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-file-alt"></i></span><span class="px-1"> Контракты</span>
+                </a></li>
+                {% endif %}
+                {% if perms.customers.view_customer %}
+                <li><a href="/customers/" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-user-check"></i></span><span class="px-1"> Активные клиенты</span>
+                </a></li>
+                {% endif %}
+                <li>
+                    <hr>
+                </li>
+                <li>
+                    <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="bar-item text-decoration-none px-3 py-3 d-block" style="background:none; border:none; width:100%; text-align:left; color: rgb(85, 83, 83);">
+                            <span><i class="fas fa-sign-out-alt"></i></span><span class="px-1"> Выход</span>
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <!-- Меню для неавторизованных пользователей -->
+                <li><a href="{% url 'accounts:login' %}" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-sign-in-alt"></i></span><span class="px-1"> Вход</span>
+                </a></li>
+                <li><a href="{% url 'accounts:register' %}" class="bar-item text-decoration-none px-3 py-3 d-block">
+                    <span><i class="fas fa-user-plus"></i></span><span class="px-1"> Регистрация</span>
+                </a></li>
             {% endif %}
-            {% if perms.ads.view_ad %}
-            <li><a href="/ads/" class="bar-item text-decoration-none px-3 py-3 d-block">
-                <span><i class="fas fa-ad"></i></span><span class="ml-1"> Рекламные компании</span>
-            </a></li>
-            {% endif %}
-            {% if perms.leads.view_lead %}
-            <li><a href="/leads/" class="bar-item text-decoration-none px-3 py-3 d-block">
-                <span><i class="fas fa-user-clock"></i></span><span class="px-1"> Лиды</span>
-            </a></li>
-            {% endif %}
-            {% if perms.contracts.view_contract %}
-            <li><a href="/contracts/" class="bar-item text-decoration-none px-3 py-3 d-block">
-                <span><i class="fas fa-file-alt"></i></span><span class="px-1"> Контракты</span>
-            </a></li>
-            {% endif %}
-            {% if perms.customers.view_customer %}
-            <li><a href="/customers/" class="bar-item text-decoration-none px-3 py-3 d-block">
-                <span><i class="fas fa-user-check"></i></span><span class="px-1"> Активные клиенты</span>
-            </a></li>
-            {% endif %}
-            <li>
-                <hr>
-            </li>
-            <li><a href="/accounts/logout" class="bar-item text-decoration-none px-3 py-3 d-block">
-                <span><i class="fas fa-sign-out-alt"></i></span><span class="px-1"> Выход</span>
-            </a></li>
         </ul>
     </div>
     <div class="content px-3 pt-4">
