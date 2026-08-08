@@ -231,9 +231,9 @@ CRM-system/
     
     python manage.py collectstatic	Собирает статику для продакшена
     
-    python manage.py loaddata fixtures/*.json	Загружает начальные данные (при наличии)
-    
     python manage.py cleanup_unused_media   Очистка неиспользуемых медиа
+    
+    python manage.py cleanup_empty_media_dirs   Удалить все пустые каталоги в MEDIA_ROOT - каталог media
 
     python manage.py static_autocollect автосбор статики онлайн
     
@@ -257,3 +257,15 @@ CRM-system/
     Для продакшена обязательно установите DJANGO_DEBUG=False и укажите реальные домены в DJANGO_ALLOWED_HOSTS.
 
     Генерируйте уникальный DJANGO_SECRET_KEY для каждого окружения.
+
+Для проверки кода использван линтер pylint, конфигурация в .pylintrc
+
+Локальна установка
+
+    uv sync --group test
+    
+Проверка кода
+
+    bash
+
+    pylint crm/

@@ -1,6 +1,6 @@
 FROM python:3.12-alpine
 
-# Устанавливаем системные зависимости
+# Системные зависимости для PostgreSQL и сборки
 RUN apk add --no-cache \
     postgresql-dev \
     gcc \
@@ -9,29 +9,28 @@ RUN apk add --no-cache \
     libpq \
     curl
 
-# Устанавливаем uv
+# Установка uv
 RUN pip install uv
 
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Копируем файлы зависимостей
+# Копируем только pyproject.toml для генерации requirements.txt
 COPY pyproject.toml ./
 
-# Генерируем requirements.txt из pyproject.toml и устанавливаем зависимости
-RUN uv pip compile pyproject.toml -o requirements.txt && \
-    uv pip install --system -r requirements.txt
+# Генерируем requirements.txt (без uv.lock)
+RUN uv pip compile pyproject.toml -o requirements.txt --no-cache
 
-# Копируем Необходимые данные
+# Исключаем все строки с pylint (удаляем группу test)
+RUN sed -i '/pylint/d' requirements.txt
+
+# Устанавливаем зависимости через pip (без кэша)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Копируем весь проект
 COPY ./crm/ ./crm/
-
-COPY .env ./
-
-# Собираем статику (позже она будет собрана при запуске, но можно и здесь)
-# RUN python crm/manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-# Точка входа: запуск gunicorn (команда переопределяется в docker-compose)
 CMD ["gunicorn", "--chdir", "/app/crm", "crm.wsgi:application", "--bind", "0.0.0.0:8000"]

@@ -90,6 +90,8 @@ INSTALLED_APPS = [
     'ads.apps.AdsConfig',
     'customers.apps.CustomersConfig',
     'leads.apps.LeadsConfig',
+
+    'django_unused_media',
 ]
 
 MIDDLEWARE = [
