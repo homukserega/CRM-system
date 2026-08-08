@@ -17,13 +17,16 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # Копируем файлы зависимостей
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml ./
 
-# Устанавливаем зависимости проекта
-RUN uv sync --no-dev --no-interaction
+# Генерируем requirements.txt из pyproject.toml и устанавливаем зависимости
+RUN uv pip compile pyproject.toml -o requirements.txt && \
+    uv pip install --system -r requirements.txt
 
-# Копируем весь проект
-COPY . .
+# Копируем Необходимые данные
+COPY ./crm/ ./crm/
+
+COPY .env ./
 
 # Собираем статику (позже она будет собрана при запуске, но можно и здесь)
 # RUN python crm/manage.py collectstatic --noinput
