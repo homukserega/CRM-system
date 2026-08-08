@@ -24,7 +24,8 @@ class AdListView(PermissionRequiredMixin, ListView):
         leads_count = Lead.objects.filter(
             ad=OuterRef('pk')).values('ad').annotate(cnt=Count('id')).values('cnt')
         customers_count = Customer.objects.filter(
-            customer__ad=OuterRef('pk')).values('customer__ad').annotate(cnt=Count('id')).values('cnt')
+            customer__ad=OuterRef('pk')).values('customer__ad').annotate(
+            cnt=Count('id')).values('cnt')
         return Ad.objects.annotate(
             leads_count=Subquery(leads_count, output_field=IntegerField()),
             customers_count=Subquery(customers_count, output_field=IntegerField())

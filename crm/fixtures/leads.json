@@ -1,1 +1,0 @@
-[{"model": "leads.lead", "pk": 1, "fields": {"first_name": "Клиент1", "last_name": "11", "phone": "30954", "email": "gg@gmail.com", "ad": 1}}, {"model": "leads.lead", "pk": 3, "fields": {"first_name": "Клиент2", "last_name": "2", "phone": "2222", "email": "22@gmail.com", "ad": null}}]
