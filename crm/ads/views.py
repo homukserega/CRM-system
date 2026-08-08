@@ -1,14 +1,19 @@
-from django.db.models import Count, Sum, OuterRef, Subquery, F, Q, Case, When, Value
+from django.db.models import (
+    Count, Sum, OuterRef, Subquery, F, Case,
+    When, Value, IntegerField, DecimalField
+)
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
-from .models import Ad
+
 from leads.models import Lead
 from customers.models import Customer
-from contracts.models import Contract
+
+from .models import Ad
 
 
 class AdListView(PermissionRequiredMixin, ListView):
+    """Список рекламных кампаний."""
     model = Ad
     template_name = 'ads/ads-list.html'
     context_object_name = 'ads'
@@ -16,12 +21,14 @@ class AdListView(PermissionRequiredMixin, ListView):
 
 
 class AdDetailView(PermissionRequiredMixin, DetailView):
+    """Детальная информация о рекламной кампании."""
     model = Ad
     template_name = 'ads/ads-detail.html'
     permission_required = 'ads.view_ad'
 
 
 class AdCreateView(PermissionRequiredMixin, CreateView):
+    """Создание рекламной кампании."""
     model = Ad
     fields = '__all__'
     template_name = 'ads/ads-create.html'
@@ -30,6 +37,7 @@ class AdCreateView(PermissionRequiredMixin, CreateView):
 
 
 class AdUpdateView(PermissionRequiredMixin, UpdateView):
+    """Редактирование рекламной кампании."""
     model = Ad
     fields = '__all__'
     template_name = 'ads/ads-edit.html'
@@ -38,6 +46,7 @@ class AdUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 class AdDeleteView(PermissionRequiredMixin, DeleteView):
+    """Удаление рекламной кампании."""
     model = Ad
     template_name = 'ads/ads-delete.html'
     success_url = reverse_lazy('ads:list')
@@ -45,29 +54,40 @@ class AdDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class AdStatisticView(PermissionRequiredMixin, ListView):
+    """Статистика по рекламным кампаниям."""
     model = Ad
     template_name = 'ads/ads-statistic.html'
     context_object_name = 'ads'
     permission_required = 'ads.view_ad'
 
     def get_queryset(self):
-        # Аннотируем каждый Ad количеством лидов и активных клиентов,
-        # а также отношением общей суммы контрактов к бюджету.
-        leads_count = Lead.objects.filter(ad=OuterRef('pk')).values('ad').annotate(cnt=Count('id')).values('cnt')
-        customers_count = Customer.objects.filter(customer__ad=OuterRef('pk')).values('customer__ad').annotate(cnt=Count('id')).values('cnt')
-        # Общая сумма контрактов для клиентов, пришедших через эту рекламную кампанию
-        total_contract_cost = Contract.objects.filter(
-            customer__customer__ad=OuterRef('pk')
-        ).values('customer__customer__ad').annotate(sum=Sum('cost')).values('sum')
+        """Возвращает аннотированный queryset с количеством лидов, клиентов и прибылью."""
+        leads_count = Lead.objects.filter(
+            ad=OuterRef('pk')
+        ).values('ad').annotate(cnt=Count('id')).values('cnt')
+
+        customers_count = Customer.objects.filter(
+            customer__ad=OuterRef('pk')
+        ).values('customer__ad').annotate(cnt=Count('id')).values('cnt')
+
+        total_contract_cost = Customer.objects.filter(
+            customer__ad=OuterRef('pk')
+        ).values('customer__ad').annotate(
+            total=Sum('contract__cost')
+        ).values('total')
 
         return Ad.objects.annotate(
-            leads_count=Subquery(leads_count, output_field=models.IntegerField()),
-            customers_count=Subquery(customers_count, output_field=models.IntegerField()),
-            total_contract_sum=Subquery(total_contract_cost, output_field=models.DecimalField(max_digits=10, decimal_places=2))
+            leads_count=Subquery(leads_count, output_field=IntegerField()),
+            customers_count=Subquery(
+                customers_count, output_field=IntegerField()),
+            total_contract_sum=Subquery(
+                total_contract_cost,
+                output_field=DecimalField(max_digits=10, decimal_places=2),
+            )
         ).annotate(
             profit=Case(
                 When(budget__gt=0, then=F('total_contract_sum') - F('budget')),
                 default=Value(None),
-                output_field=models.DecimalField(max_digits=10, decimal_places=2)
+                output_field=DecimalField(max_digits=10, decimal_places=2)
             )
         )

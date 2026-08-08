@@ -83,7 +83,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-    'django_rename_app',
     # 'debug_toolbar',
     'accounts.apps.AccountsConfig',
     'products.apps.ProductsConfig',
