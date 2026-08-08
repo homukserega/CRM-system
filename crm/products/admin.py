@@ -12,5 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
     def description_preview(self, obj):
-        return obj.description[:50] + '…' if obj.description and len(obj.description) > 50 else obj.description
+        if obj.description and len(obj.description) > 50:
+            return obj.description[:50] + '…'
+        return obj.description
     description_preview.short_description = 'Описание (кратко)'

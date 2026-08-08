@@ -27,15 +27,21 @@ class Command(BaseCommand):
         operator_group.permissions.set(operator_perms)
 
         # Назначаем разрешения для Маркетолога
-        marketer_perms = list(get_perms(Product, ['view_product', 'add_product', 'change_product', 'delete_product']))
-        marketer_perms += list(get_perms(Ad, ['view_ad', 'add_ad', 'change_ad', 'delete_ad']))
+        marketer_perms = list(
+            get_perms(Product, ['view_product', 'add_product', 'change_product', 'delete_product']))
+        marketer_perms += list(
+            get_perms(Ad, ['view_ad', 'add_ad', 'change_ad', 'delete_ad']))
         marketer_group.permissions.set(marketer_perms)
 
         # Назначаем разрешения для Менеджера
-        manager_perms = list(get_perms(Lead, ['view_lead', 'change_lead']))
-        manager_perms += list(get_perms(Customer, ['add_customer']))  # для перевода в активные
+        manager_perms = list(
+            get_perms(Lead, ['view_lead', 'change_lead']))
         manager_perms += list(
-            get_perms(Contract, ['view_contract', 'add_contract', 'change_contract', 'delete_contract']))
+            get_perms(Customer, ['add_customer']))  # для перевода в активные
+        manager_perms += list(
+            get_perms(Contract,
+                      ['view_contract', 'add_contract', 'change_contract', 'delete_contract',
+                      ]))
         manager_group.permissions.set(manager_perms)
 
         # Всем группам даём разрешение на просмотр статистики рекламных кампаний

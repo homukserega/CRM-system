@@ -12,4 +12,3 @@ class CustomerForm(forms.ModelForm):
         # Поле customer можно сделать скрытым, если оно предзаполнено
         # или оставить видимым для выбора вручную (по ТЗ – предзаполнено)
         # Для предзаполнения используется initial в LeadToCustomerView
-        pass

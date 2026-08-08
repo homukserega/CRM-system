@@ -1,11 +1,10 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
-from .models import Lead
+from django.shortcuts import get_object_or_404
 from customers.models import Customer
 from customers.forms import CustomerForm  # создадим форму позже
-
+from .models import Lead
 
 class LeadListView(PermissionRequiredMixin, ListView):
     model = Lead

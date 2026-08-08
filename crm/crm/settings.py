@@ -31,11 +31,11 @@ POSTGRES_INT_PORT = os.getenv("POSTGRES_INT_PORT", 5432)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': POSTGRES_DB,        # Must be created in Postgres first
-        'USER': POSTGRES_USER,           # Database user
-        'PASSWORD': POSTGRES_PASSWORD,   # User password
-        'HOST': POSTGRES_HOST,           # Use 'localhost' or your database IP
-        'PORT': POSTGRES_INT_PORT,       # Default PostgreSQL int port is 5432
+        'NAME': POSTGRES_DB,  # Must be created in Postgres first
+        'USER': POSTGRES_USER,  # Database user
+        'PASSWORD': POSTGRES_PASSWORD,  # User password
+        'HOST': POSTGRES_HOST,  # Use 'localhost' or your database IP
+        'PORT': POSTGRES_INT_PORT,  # Default PostgreSQL int port is 5432
     }
 }
 
@@ -55,9 +55,9 @@ LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
 DJANGO_ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "")
 
 ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "0.0.0.0",
-] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",") # сущ. хосты + из .env
+                    "127.0.0.1",
+                    "0.0.0.0",
+                ] + os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")  # сущ. хосты + из .env
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -159,19 +159,18 @@ BASE_AD_MODEL = 'ads.Ad'
 BASE_LEAD_MODEL = 'leads.Lead'
 BASE_CONTRACT_MODEL = 'contracts.Contract'
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-STATIC_URL = 'static/' # префикс URL-адреса для статических файлов
-STATIC_ROOT = BASE_DIR / "staticfiles" # путь к общей статитч. папке, формируемой при запуске команды collectstatic
+STATIC_URL = 'static/'  # префикс URL-адреса для статических файлов
+STATIC_ROOT = BASE_DIR / "staticfiles"  # путь к общей статитч. папке, формируемой при запуске команды collectstatic
 
 STATICFILES_DIRS = [
     BASE_DIR / 'templates',
-] # список доп. нестандартных путей к статич. файлам, для сбора и отладки
+]  # список доп. нестандартных путей к статич. файлам, для сбора и отладки
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -179,8 +178,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LOGIN_REDIRECT_URL = reverse_lazy("registration:about-me")
 # LOGIN_URL = reverse_lazy("registration:login")
 
-LOGIN_URL = 'accounts:login'          # или просто 'login', если не используете пространство имён
-LOGIN_REDIRECT_URL = 'home'           # имя главной страницы (определено в корневом urls.py)
+LOGIN_URL = 'accounts:login'  # или просто 'login', если не используете пространство имён
+LOGIN_REDIRECT_URL = 'home'  # имя главной страницы (определено в корневом urls.py)
 LOGOUT_REDIRECT_URL = 'accounts:login'  # перенаправление после выхода (опционально)
 
 LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
