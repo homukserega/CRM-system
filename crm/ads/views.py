@@ -19,6 +19,17 @@ class AdListView(PermissionRequiredMixin, ListView):
     context_object_name = 'ads'
     permission_required = 'ads.view_ad'
 
+    def get_queryset(self):
+        # Аннотируем количеством лидов и клиентов
+        leads_count = Lead.objects.filter(
+            ad=OuterRef('pk')).values('ad').annotate(cnt=Count('id')).values('cnt')
+        customers_count = Customer.objects.filter(
+            customer__ad=OuterRef('pk')).values('customer__ad').annotate(cnt=Count('id')).values('cnt')
+        return Ad.objects.annotate(
+            leads_count=Subquery(leads_count, output_field=IntegerField()),
+            customers_count=Subquery(customers_count, output_field=IntegerField())
+        )
+
 
 class AdDetailView(PermissionRequiredMixin, DetailView):
     """Детальная информация о рекламной кампании."""
@@ -61,15 +72,17 @@ class AdStatisticView(PermissionRequiredMixin, ListView):
     permission_required = 'ads.view_ad'
 
     def get_queryset(self):
-        """Возвращает аннотированный queryset с количеством лидов, клиентов и прибылью."""
+        # Количество лидов
         leads_count = Lead.objects.filter(
             ad=OuterRef('pk')
         ).values('ad').annotate(cnt=Count('id')).values('cnt')
 
+        # Количество активных клиентов
         customers_count = Customer.objects.filter(
             customer__ad=OuterRef('pk')
         ).values('customer__ad').annotate(cnt=Count('id')).values('cnt')
 
+        # Общая сумма контрактов по клиентам этой кампании
         total_contract_cost = Customer.objects.filter(
             customer__ad=OuterRef('pk')
         ).values('customer__ad').annotate(
@@ -78,15 +91,21 @@ class AdStatisticView(PermissionRequiredMixin, ListView):
 
         return Ad.objects.annotate(
             leads_count=Subquery(leads_count, output_field=IntegerField()),
-            customers_count=Subquery(
-                customers_count, output_field=IntegerField()),
+            customers_count=Subquery(customers_count, output_field=IntegerField()),
             total_contract_sum=Subquery(
                 total_contract_cost,
-                output_field=DecimalField(max_digits=10, decimal_places=2),
+                output_field=DecimalField(max_digits=10, decimal_places=2)
             )
         ).annotate(
+            # Прибыль (доход - расход)
             profit=Case(
                 When(budget__gt=0, then=F('total_contract_sum') - F('budget')),
+                default=Value(None),
+                output_field=DecimalField(max_digits=10, decimal_places=2)
+            ),
+            # Соотношение дохода к расходам (ROI)
+            ratio=Case(
+                When(budget__gt=0, then=F('total_contract_sum') / F('budget')),
                 default=Value(None),
                 output_field=DecimalField(max_digits=10, decimal_places=2)
             )

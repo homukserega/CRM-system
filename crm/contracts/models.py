@@ -23,9 +23,9 @@ class Contract(models.Model):
         on_delete=models.CASCADE,
     )
     file = models.FileField(upload_to='documents/%Y/%m/%d/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(null=True, blank=True)
+    uploaded_at = models.DateField(auto_now_add=True)
+    start_date = models.DateField(default=timezone.now)
+    end_date = models.DateField(null=True, blank=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self) -> str:

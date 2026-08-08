@@ -6,9 +6,14 @@
     <div class="col">
         <ul class="list-group">
             {% for ad in ads %}
-            <li class="list-group-item list-group-item-light d-flex justify-content-between">
-                <a href="/ads/{{ ad.pk }}" class="text-decoration-none link-dark">{{ ad.name }}</a>
-                <p>Лидов: {{ ad.leads_count }} | Активных клиентов: {{ ad.customers_count }} | Соотношение контрактов к затратам: {{ ad.profit|default_if_none:"-" }}</p>
+            <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                <span class="fw-bold">{{ ad.name }}</span>
+                <div>
+                    <span class="badge bg-secondary">Лидов: {{ ad.leads_count|default:"0" }}</span>
+                    <span class="badge bg-success">Клиентов: {{ ad.customers_count|default:"0" }}</span>
+                    <span class="badge bg-info">Прибыль: {{ ad.profit|default_if_none:"-" }} руб.</span>
+                    <span class="badge bg-warning">Соотношение (доход/расход): {{ ad.ratio|default_if_none:"-" }}</span>
+                </div>
             </li>
             {% endfor %}
         </ul>

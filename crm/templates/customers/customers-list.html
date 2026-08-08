@@ -9,9 +9,17 @@
     <div class="col">
         <ul class="list-group">
             {% for customer in customers %}
-            <li class="list-group-item list-group-item-light d-flex justify-content-between">
-                <a href="/customers/{{ customer.pk }}" class="text-decoration-none link-dark">{{ customer.lead.last_name }} {{ customer.lead.first_name }}</a>
-                <a href="/customers/{{ customer.pk }}/delete" class="btn btn-danger">Удалить</a>
+            <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="/customers/{{ customer.pk }}" class="text-decoration-none link-dark">
+                        {{ customer.customer.last_name }} {{ customer.customer.first_name }}
+                    </a>
+                </div>
+                <div>
+                    <a href="/customers/{{ customer.pk }}" class="btn btn-sm btn-info">Детали</a>
+                    <a href="/customers/{{ customer.pk }}/edit" class="btn btn-sm btn-primary">Редактировать</a>
+                    <a href="/customers/{{ customer.pk }}/delete" class="btn btn-sm btn-danger">Удалить</a>
+                </div>
             </li>
             {% endfor %}
         </ul>

@@ -10,9 +10,17 @@
     <div class="col">
         <ul class="list-group">
             {% for ad in ads %}
-            <li class="list-group-item list-group-item-light d-flex justify-content-between">
-                <a href="/ads/{{ ad.pk }}" class="text-decoration-none link-dark">{{ ad.name }}</a>
-                <a href="/ads/{{ ad.pk }}/delete" class="btn btn-danger">Удалить</a>
+            <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                <span>
+                    {{ ad.name }}
+                    <span class="badge bg-secondary ms-2">Лидов: {{ ad.leads_count|default:0 }}</span>
+                    <span class="badge bg-success ms-2">Клиентов: {{ ad.customers_count|default:0 }}</span>
+                </span>
+                <div>
+                    <a href="{% url 'ads:detail' ad.pk %}" class="btn btn-sm btn-info">Детали</a>
+                    <a href="{% url 'ads:edit' ad.pk %}" class="btn btn-sm btn-primary">Редактировать</a>
+                    <a href="{% url 'ads:delete' ad.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                </div>
             </li>
             {% endfor %}
         </ul>
