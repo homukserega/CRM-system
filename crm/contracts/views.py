@@ -4,6 +4,23 @@ from django.urls import reverse_lazy
 from .models import Contract
 from .forms import ContractForm
 
+from rest_framework.viewsets import ModelViewSet
+from .serializers import ContractSerializer
+from drf_spectacular.utils import extend_schema
+
+
+@extend_schema(tags=['contracts'])
+class ContractViewSet(ModelViewSet):
+    """
+    Управление контрактами.
+    - Создание, просмотр, изменение и удаление контрактов.
+    - Поля: название, предоставляемая услуга, файл с документом,
+    дата заключения, период действия, сумма
+    """
+    queryset = Contract.objects.all()
+    serializer_class = ContractSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']
+
 
 class ContractListView(PermissionRequiredMixin, ListView):
     """Список контрактов."""

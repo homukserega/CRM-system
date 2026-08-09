@@ -6,6 +6,23 @@ from customers.models import Customer
 from customers.forms import CustomerForm  # создадим форму позже
 from .models import Lead
 
+from rest_framework.viewsets import ModelViewSet
+from .serializers import LeadSerializer
+from drf_spectacular.utils import extend_schema
+
+
+@extend_schema(tags=['leads'])
+class LeadViewSet(ModelViewSet):
+    """
+    Управление потенциальными клиентами.
+    - Создание, просмотр, изменение и удаление потенциальных клиентов.
+    - Поля: Имя, фамилия, телефон, email, рекламная кампания, из которой он узнал об услуге.
+    """
+    queryset = Lead.objects.all()
+    serializer_class = LeadSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']
+
+
 class LeadListView(PermissionRequiredMixin, ListView):
     model = Lead
     template_name = 'leads/leads-list.html'

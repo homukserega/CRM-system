@@ -8,8 +8,23 @@ from django.urls import reverse_lazy
 
 from leads.models import Lead
 from customers.models import Customer
-
 from .models import Ad
+
+from rest_framework.viewsets import ModelViewSet
+from .serializers import AdSerializer
+from drf_spectacular.utils import extend_schema
+
+
+@extend_schema(tags=['ads'])
+class AdViewSet(ModelViewSet):
+    """
+    Управление рекламными кампаниями.
+    - Создание, просмотр, изменение и удаление рекламных кампаний.
+    - Поля: название, услуга, канал продвижения, бюджет.
+    """
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']
 
 
 class AdListView(PermissionRequiredMixin, ListView):

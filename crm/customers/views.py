@@ -4,6 +4,22 @@ from django.urls import reverse_lazy
 from .models import Customer
 from .forms import CustomerForm
 
+from rest_framework.viewsets import ModelViewSet
+from .serializers import CustomerSerializer
+from drf_spectacular.utils import extend_schema
+
+
+@extend_schema(tags=['customers'])
+class CustomerViewSet(ModelViewSet):
+    """
+    Управление активными клиентами.
+    - Создание, просмотр, изменение и удаление активных клиентов.
+    - Поля: данные о потенциальном клиенте, данные о контракте.
+    """
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']
+
 
 class CustomerListView(PermissionRequiredMixin, ListView):
     model = Customer

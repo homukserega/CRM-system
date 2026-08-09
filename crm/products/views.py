@@ -3,6 +3,22 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from .models import Product
 
+from drf_spectacular.utils import extend_schema
+from rest_framework.viewsets import ModelViewSet
+from .serializers import ProductSerializer
+
+
+@extend_schema(tags=['products'])
+class ProductViewSet(ModelViewSet):
+    """
+    Управление услугами.
+    - Создание, просмотр, изменение и удаление услуг.
+    - Поля: название, описание, стоимость.
+    """
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']
+
 
 class ProductListView(PermissionRequiredMixin, ListView):
     model = Product

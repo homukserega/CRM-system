@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from products.models import Product
 from ads.models import Ad
@@ -5,7 +6,7 @@ from leads.models import Lead
 from customers.models import Customer
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'users/index.html'
 
     def get_context_data(self, **kwargs):

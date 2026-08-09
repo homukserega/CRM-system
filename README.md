@@ -262,4 +262,4 @@ CRM-system/
 
     pylint crm/
 
-Для просмотра документации swagger '/docs'
+Для просмотра документации swagger '/docs' добавлемы модели представления api dhango restframework

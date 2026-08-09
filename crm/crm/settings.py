@@ -220,7 +220,21 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'CRM SYSTEM',
-    'DESCRIPTION': 'CRM SYSTEM API',
+    'DESCRIPTION': 'API для управления услугами, рекламными кампаниями, лидами, контрактами и активными клиентами.',
     'VERSION': 'v1',
     'SERVE_INCLUDE_SCHEMA': False,
+
+    # Добавляем описание тегов
+    'TAGS': [
+        {'name': 'ads', 'description': 'Управление рекламными кампаниями (CRUD)'},
+        {'name': 'contracts', 'description': 'Управление контрактами (CRUD)'},
+        {'name': 'customers', 'description': 'Управление активными клиентами (CRUD)'},
+        {'name': 'leads', 'description': 'Управление лидами (CRUD)'},
+        {'name': 'products', 'description': 'Управление услугами (CRUD)'},
+    ],
+
+    # Включить автоматическое добавление примера ответа для модели
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
+    'ENUM_NAME_OVERRIDES': {},
 }

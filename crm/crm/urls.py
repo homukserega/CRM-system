@@ -22,7 +22,22 @@ from .views import IndexView
 
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+from rest_framework.routers import DefaultRouter
+from ads.views import AdViewSet
+from contracts.views import ContractViewSet
+from customers.views import CustomerViewSet
+from leads.views import LeadViewSet
+from products.views import ProductViewSet
+
+router = DefaultRouter()
+router.register(r'ads', AdViewSet)
+router.register(r'contracts', ContractViewSet)
+router.register(r'customers', CustomerViewSet)
+router.register(r'leads', LeadViewSet)
+router.register(r'products', ProductViewSet)
+
 urlpatterns = [
+    path('api/', include(router.urls)),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('admin/', admin.site.urls),
