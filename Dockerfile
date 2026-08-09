@@ -22,9 +22,6 @@ COPY pyproject.toml ./
 # Генерируем requirements.txt (без uv.lock)
 RUN uv pip compile pyproject.toml -o requirements.txt --no-cache
 
-# Исключаем все строки с pylint (удаляем группу test)
-RUN sed -i '/pylint/d' requirements.txt
-
 # Устанавливаем зависимости через pip (без кэша)
 RUN pip install --no-cache-dir -r requirements.txt
 

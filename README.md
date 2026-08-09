@@ -260,12 +260,6 @@ CRM-system/
 
 Для проверки кода использван линтер pylint, конфигурация в .pylintrc
 
-Локальна установка
-
-    uv sync --group test
-    
-Проверка кода
-
-    bash
-
     pylint crm/
+
+Для просмотра документации swagger '/docs'

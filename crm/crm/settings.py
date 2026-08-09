@@ -83,7 +83,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+
     # 'debug_toolbar',
+
+    'rest_framework',
+    'drf_spectacular',
     'accounts.apps.AccountsConfig',
     'products.apps.ProductsConfig',
     'contracts.apps.ContractsConfig',
@@ -167,11 +171,11 @@ BASE_CONTRACT_MODEL = 'contracts.Contract'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-STATIC_URL = 'static/'  # префикс URL-адреса для статических файлов
+STATIC_URL = '/static/'  # префикс URL-адреса для статических файлов
 STATIC_ROOT = BASE_DIR / "staticfiles"  # путь к общей статитч. папке, формируемой при запуске команды collectstatic
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'templates',
+    BASE_DIR / 'static',
 ]  # список доп. нестандартных путей к статич. файлам, для сбора и отладки
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
@@ -209,3 +213,14 @@ logging.config.dictConfig({
         },
     },
 })
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'CRM SYSTEM',
+    'DESCRIPTION': 'CRM SYSTEM API',
+    'VERSION': 'v1',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
