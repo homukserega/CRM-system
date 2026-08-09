@@ -262,4 +262,6 @@ CRM-system/
 
     pylint crm/
 
-Для просмотра документации swagger '/docs' добавлемы модели представления api dhango restframework
+Для просмотра документации swagger:
+    
+    http://127.0.0.1:8000/docs
