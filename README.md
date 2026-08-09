@@ -238,6 +238,10 @@ CRM-system/
     python manage.py static_autocollect автосбор статики онлайн
     
     python manage.py static_autocollect > /dev/null 2>&1    автосбор статики в фоне
+    
+Команда для создания тестовых пользователей согласно ролям
+
+    python manage.py create_test_users  Создание тестовых пользователей для проверки ролей
 
 Для локальной разработки рекомендуется использовать DEBUG=True и встроенный сервер runserver.
 Статика автоматически обслуживается Django в режиме отладки.
@@ -257,6 +261,12 @@ CRM-system/
     Для продакшена обязательно установите DJANGO_DEBUG=False и укажите реальные домены в DJANGO_ALLOWED_HOSTS.
 
     Генерируйте уникальный DJANGO_SECRET_KEY для каждого окружения.
+
+Передача команды в контейнер, без необходимости входа
+
+    docker exec -it crm-system-app-1 python crm/manage.py createsuperuser
+    
+    docker exec -it crm-system-app-1 python crm/manage.py Команда Django 
 
 Для проверки кода использван линтер pylint, конфигурация в .pylintrc
 
