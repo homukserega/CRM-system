@@ -238,10 +238,18 @@ CRM-system/
     python manage.py static_autocollect автосбор статики онлайн
     
     python manage.py static_autocollect > /dev/null 2>&1    автосбор статики в фоне
-    
-Команда для создания тестовых пользователей согласно ролям
 
     python manage.py create_test_users  Создание тестовых пользователей для проверки ролей
+    
+Тестовые данные пользователей
+
+    admin:admin
+    
+    operator:operator
+    
+    marketer:marketer
+    
+    manager:manager
 
 Для локальной разработки рекомендуется использовать DEBUG=True и встроенный сервер runserver.
 Статика автоматически обслуживается Django в режиме отладки.
