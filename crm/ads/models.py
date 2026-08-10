@@ -11,7 +11,6 @@ class Ad(models.Model):
     product = models.ForeignKey(
         settings.BASE_PRODUCT_MODEL,
         related_name="product",
-        blank=True,
         on_delete=models.CASCADE,
     )
     promotion = models.CharField(max_length=255, null=True, blank=True)

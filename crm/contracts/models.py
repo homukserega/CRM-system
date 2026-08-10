@@ -20,7 +20,6 @@ class Contract(models.Model):
     product = models.ForeignKey(
         settings.BASE_PRODUCT_MODEL,
         related_name="contract",
-        blank=True,
         on_delete=models.CASCADE,
     )
     file = models.FileField(upload_to="documents/%Y/%m/%d/")

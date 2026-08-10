@@ -15,8 +15,6 @@ class Lead(models.Model):
         settings.BASE_AD_MODEL,
         on_delete=models.CASCADE,
         related_name="ad",
-        blank=True,
-        null=True,
     )
 
     def __str__(self):
