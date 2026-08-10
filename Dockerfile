@@ -1,48 +1,60 @@
-# ---- Этап 1: Установка зависимостей ----
+# ============================================
+# STAGE 1: Builder
+# ============================================
 FROM python:3.12-alpine AS builder
 
-# Системные зависимости для сборки PostgreSQL и других пакетов
 RUN apk add --no-cache \
     postgresql-dev \
     gcc \
     musl-dev \
     libffi-dev \
-    libpq \
-    curl
+    curl \
+    && pip install --upgrade uv
 
-# Установка uv
-RUN pip install uv
-
-# Рабочая директория
-WORKDIR /app
-
-# Копируем только файлы с зависимостями для лучшего кэширования
-COPY pyproject.toml ./
-
-# Создаём виртуальное окружение и устанавливаем зависимости без группы dev
-RUN uv venv /venv && \
-    . /venv/bin/activate && \
-    uv sync --no-dev --no-interaction
-
-# ---- Этап 2: Финальный образ ----
-FROM python:3.12-alpine
-
-# Устанавливаем только необходимые системные библиотеки для выполнения (без средств сборки)
-RUN apk add --no-cache libpq
-
-# Копируем установленное виртуальное окружение из предыдущего этапа
-COPY --from=builder /venv /venv
-
-# Копируем исходный код проекта
-COPY ./crm/ /app/crm/
-
-# Устанавливаем переменные окружения для использования виртуального окружения
-ENV PATH="/venv/bin:$PATH" \
-    PYTHONUNBUFFERED=1 \
+ENV PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE=crm.settings
 
-# Рабочая директория
 WORKDIR /app
 
-# Запускаем Gunicorn
+# Копируем pyproject.toml и устанавливаем зависимости
+COPY pyproject.toml ./
+COPY ./crm/ ./crm/
+
+RUN uv venv /app/venv && \
+    . /app/venv/bin/activate && \
+    uv pip install --no-cache --group production && \
+    # Собираем статику сразу в builder
+    python /app/crm/manage.py collectstatic --noinput
+
+# ============================================
+# STAGE 2: Production
+# ============================================
+FROM python:3.12-alpine AS production
+
+RUN apk add --no-cache \
+    postgresql-client \
+    libpq \
+    && rm -rf /var/cache/apk/*
+
+ENV PYTHONUNBUFFERED=1 \
+    PATH="/app/venv/bin:${PATH}" \
+    VIRTUAL_ENV="/app/venv"
+
+WORKDIR /app
+
+# Копируем виртуальное окружение
+COPY --from=builder /app/venv /app/venv
+
+# Копируем код и собранную статику
+COPY --from=builder /app/crm /app/crm
+
+# Создаем пользователя
+RUN addgroup -g 1000 -S appuser && \
+    adduser -u 1000 -S appuser -G appuser && \
+    chown -R appuser:appuser /app
+
+USER appuser
+
+EXPOSE 8000
+
 CMD ["gunicorn", "--chdir", "/app/crm", "crm.wsgi:application", "--bind", "0.0.0.0:8000"]
