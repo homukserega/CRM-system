@@ -36,7 +36,8 @@ class Command(BaseCommand):
 
         # Назначаем разрешения для Менеджера
         manager_perms = list(get_perms(Lead, ["view_lead", "change_lead"]))
-        manager_perms += list(get_perms(Customer, ["add_customer", "view_customer"]))  # для перевода в активные
+        manager_perms += list(
+            get_perms(Customer, ["add_customer", "view_customer"]))  # для перевода в активные
         manager_perms += list(
             get_perms(
                 Contract,

@@ -62,15 +62,16 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "products.delete_product"
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        obj = self.get_object()
         try:
-            self.object.delete()
+            obj.delete()
             messages.success(request, "Услуга успешно удалена.")
-            return redirect(self.success_url)
+            return redirect(self.get_success_url())
         except ProtectedError:
             messages.error(
                 request,
-                "Невозможно удалить услугу, так как она используется в рекламных кампаниях или контрактах. "
+                "Невозможно удалить услугу, "
+                "так как она используется в рекламных кампаниях или контрактах. "
                 "Сначала удалите или измените связанные записи."
             )
-            return redirect("products:list")
+            return redirect(self.get_success_url())
