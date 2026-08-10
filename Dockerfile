@@ -22,8 +22,9 @@ COPY ./crm/ ./crm/
 
 RUN uv venv /app/venv && \
     . /app/venv/bin/activate && \
-    uv pip install --no-cache --group production && \
-    # Собираем статику сразу в builder
+    # Устанавливаем все зависимости из pyproject.toml
+    uv pip install -e . && \
+    # Собираем статику
     python /app/crm/manage.py collectstatic --noinput
 
 # ============================================
@@ -42,13 +43,9 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Копируем виртуальное окружение
 COPY --from=builder /app/venv /app/venv
-
-# Копируем код и собранную статику
 COPY --from=builder /app/crm /app/crm
 
-# Создаем пользователя
 RUN addgroup -g 1000 -S appuser && \
     adduser -u 1000 -S appuser -G appuser && \
     chown -R appuser:appuser /app
