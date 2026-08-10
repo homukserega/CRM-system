@@ -48,7 +48,9 @@ COPY --from=builder /app/crm /app/crm
 
 RUN addgroup -g 1000 -S appuser && \
     adduser -u 1000 -S appuser -G appuser && \
-    chown -R appuser:appuser /app
+    mkdir -p /app/crm/media/documents /app/crm/staticfiles && \
+    chown -R appuser:appuser /app/crm && \
+    chmod -R 755 /app/crm/media
 
 USER appuser
 
