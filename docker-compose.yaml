@@ -3,21 +3,23 @@ services:
     image: postgres:18.4-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-admin-db}
     ports:
       - "${POSTGRES_EXT_PORT:-5432}:5432"
     volumes:
-      - db_data:/var/lib/postgresql
-      - ./postgresql_conf/postgresql.conf:/etc/postgresql/postgresql.conf
+      - db_data:/var/lib/postgresql/data
+      - ./postgresql_conf/postgresql.conf:/etc/postgresql/postgresql.conf:ro
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
-    stop_signal: SIGKILL
+    stop_signal: SIGTERM  # Используем SIGTERM вместо SIGKILL для корректного завершения
+    stop_grace_period: 30s
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} || exit 1"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-admin-db} || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     networks:
       - crm-network
 
@@ -27,14 +29,13 @@ services:
       sh -c "python crm/manage.py migrate &&
              python crm/manage.py init_roles &&
              python crm/manage.py collectstatic --noinput &&
-             gunicorn --chdir crm crm.wsgi:application --bind 0.0.0.0:8000"
+             gunicorn --chdir crm crm.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2"
     ports:
       - "8000:8000"
-    restart: always
+    restart: unless-stopped  # Изменено с always на unless-stopped
     env_file:
       - .env
     environment:
-      # локальный запуск django POSTGRES_HOST: localhost
       POSTGRES_HOST: db
       DJANGO_DEBUG: "False"
     depends_on:
@@ -45,12 +46,13 @@ services:
       - media_data:/app/crm/media
     networks:
       - crm-network
+    stop_grace_period: 30s
 
   nginx:
     image: nginx:alpine
     ports:
       - "80:80"
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - static_data:/vol/static/
@@ -59,6 +61,7 @@ services:
       - app
     networks:
       - crm-network
+    stop_grace_period: 30s
 
 volumes:
   db_data:
