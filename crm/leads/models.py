@@ -14,7 +14,9 @@ class Lead(models.Model):
     ad = models.ForeignKey(
         settings.BASE_AD_MODEL,
         on_delete=models.CASCADE,
-        related_name="ad",
+        related_name="leads",
+        blank=True,
+        null=True,
     )
 
     def __str__(self):

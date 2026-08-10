@@ -6,7 +6,7 @@ class Customer(models.Model):
     class Meta:
         verbose_name_plural = "Customers"
 
-    customer = models.OneToOneField(
+    lead = models.OneToOneField(
         settings.BASE_LEAD_MODEL,
         on_delete=models.CASCADE,
         related_name="customer",
@@ -14,5 +14,5 @@ class Customer(models.Model):
     contract = models.OneToOneField(
         settings.BASE_CONTRACT_MODEL,
         on_delete=models.CASCADE,
-        related_name="contract",
+        related_name="customer",
     )

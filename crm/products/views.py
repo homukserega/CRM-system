@@ -1,7 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.db.models.deletion import ProtectedError
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Product
@@ -19,6 +23,7 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     http_method_names = ["get", "post", "put", "delete"]
+    permission_classes = [DjangoModelPermissions]
 
 
 class ProductListView(PermissionRequiredMixin, ListView):
@@ -55,3 +60,17 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = "products/products-delete.html"
     success_url = reverse_lazy("products:list")
     permission_required = "products.delete_product"
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        try:
+            self.object.delete()
+            messages.success(request, "Услуга успешно удалена.")
+            return redirect(self.success_url)
+        except ProtectedError:
+            messages.error(
+                request,
+                "Невозможно удалить услугу, так как она используется в рекламных кампаниях или контрактах. "
+                "Сначала удалите или измените связанные записи."
+            )
+            return redirect("products:list")

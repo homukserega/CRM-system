@@ -19,8 +19,8 @@ class Contract(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     product = models.ForeignKey(
         settings.BASE_PRODUCT_MODEL,
-        related_name="contract",
-        on_delete=models.CASCADE,
+        related_name="contracts",
+        on_delete=models.PROTECT,
     )
     file = models.FileField(upload_to="documents/%Y/%m/%d/")
     uploaded_at = models.DateField(auto_now_add=True)

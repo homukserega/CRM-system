@@ -5,8 +5,8 @@ from .models import Customer
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("id", "customer", "contract")
-    list_display_links = ("customer",)
-    search_fields = ("customer__last_name", "customer__first_name", "customer__email")
+    list_display = ("id", "lead", "contract")
+    list_display_links = ("lead",)
+    search_fields = ("lead__last_name", "lead__first_name", "lead__email")
     list_filter = ("contract",)
-    autocomplete_fields = ("customer", "contract")
+    autocomplete_fields = ("lead", "contract")

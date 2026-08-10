@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
 from customers.forms import CustomerForm  # создадим форму позже
@@ -23,6 +24,7 @@ class LeadViewSet(ModelViewSet):
     queryset = Lead.objects.all()
     serializer_class = LeadSerializer
     http_method_names = ["get", "post", "put", "delete"]
+    permission_classes = [DjangoModelPermissions]
 
 
 class LeadListView(PermissionRequiredMixin, ListView):
@@ -71,7 +73,7 @@ class LeadToCustomerView(PermissionRequiredMixin, CreateView):
         initial = super().get_initial()
         lead_id = self.kwargs.get("pk")
         lead = get_object_or_404(Lead, pk=lead_id)
-        initial["customer"] = lead
+        initial["lead"] = lead
         return initial
 
     def get_success_url(self):

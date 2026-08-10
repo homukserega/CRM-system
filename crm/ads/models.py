@@ -10,8 +10,8 @@ class Ad(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False, db_index=True)
     product = models.ForeignKey(
         settings.BASE_PRODUCT_MODEL,
-        related_name="product",
-        on_delete=models.CASCADE,
+        related_name="ads",
+        on_delete=models.PROTECT,
     )
     promotion = models.CharField(max_length=255, null=True, blank=True)
     budget = models.DecimalField(max_digits=10, decimal_places=2)

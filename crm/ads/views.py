@@ -14,6 +14,7 @@ from django.db.models import (
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
 from customers.models import Customer
@@ -34,6 +35,7 @@ class AdViewSet(ModelViewSet):
     queryset = Ad.objects.all()
     serializer_class = AdSerializer
     http_method_names = ["get", "post", "put", "delete"]
+    permission_classes = [DjangoModelPermissions]
 
 
 class AdListView(PermissionRequiredMixin, ListView):
@@ -53,8 +55,8 @@ class AdListView(PermissionRequiredMixin, ListView):
             .values("cnt")
         )
         customers_count = (
-            Customer.objects.filter(customer__ad=OuterRef("pk"))
-            .values("customer__ad")
+            Customer.objects.filter(lead__ad=OuterRef("pk"))
+            .values("lead__ad")
             .annotate(cnt=Count("id"))
             .values("cnt")
         )
@@ -120,16 +122,16 @@ class AdStatisticView(PermissionRequiredMixin, ListView):
 
         # Количество активных клиентов
         customers_count = (
-            Customer.objects.filter(customer__ad=OuterRef("pk"))
-            .values("customer__ad")
+            Customer.objects.filter(lead__ad=OuterRef("pk"))
+            .values("lead__ad")
             .annotate(cnt=Count("id"))
             .values("cnt")
         )
 
         # Общая сумма контрактов по клиентам этой кампании
         total_contract_cost = (
-            Customer.objects.filter(customer__ad=OuterRef("pk"))
-            .values("customer__ad")
+            Customer.objects.filter(lead__ad=OuterRef("pk"))
+            .values("lead__ad")
             .annotate(total=Sum("contract__cost"))
             .values("total")
         )

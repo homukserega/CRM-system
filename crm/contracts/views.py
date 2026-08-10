@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
 from .forms import ContractForm
@@ -21,6 +22,7 @@ class ContractViewSet(ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
     http_method_names = ["get", "post", "put", "delete"]
+    permission_classes = [DjangoModelPermissions]
 
 
 class ContractListView(PermissionRequiredMixin, ListView):
