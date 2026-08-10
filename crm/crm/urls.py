@@ -38,7 +38,7 @@ router.register(r"leads", LeadViewSet)
 router.register(r"products", ProductViewSet)
 
 urlpatterns = [
-    path("api/", include(router.urls)),
+    path("api/v1/", include(router.urls)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path("admin/", admin.site.urls),
