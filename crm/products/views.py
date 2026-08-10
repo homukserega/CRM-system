@@ -66,7 +66,6 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
         try:
             obj.delete()
             messages.success(request, "Услуга успешно удалена.")
-            return redirect(self.get_success_url())
         except ProtectedError:
             messages.error(
                 request,
@@ -74,4 +73,4 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
                 "так как она используется в рекламных кампаниях или контрактах. "
                 "Сначала удалите или измените связанные записи."
             )
-            return redirect(self.get_success_url())
+        return redirect(self.success_url)
