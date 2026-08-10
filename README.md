@@ -28,14 +28,14 @@ CRM система предназначена для управления вза
 ### 1. Веб-интерфейс (Web UI)
 
 - **Назначение:** Работа сотрудников через браузер
-- **URL:** `https://crm.company.com/`
+- **URL:** `http://127.0.0.1/`
 - **Формат:** HTML страницы с шаблонами Django
 - **Пример:** `/products/`, `/leads/`, `/contracts/`
 
 ### 2. REST API
 
 - **Назначение:** Интеграция с внешними системами
-- **URL:** `https://crm.company.com/api/v1/`
+- **URL:** `http://127.0.0.1/api/v1/`
 - **Формат:** JSON
 - **Пример:** `/api/v1/products/`, `/api/v1/leads/`
 ┌─────────────────────────────────────────────────────────┐
@@ -339,7 +339,8 @@ CRM-system/
 
     pylint crm/
 
-Веб-интерфейс
+#### Веб-интерфейс
+
 Страницы
 Раздел	URL	Описание
 Главная	/	Статистика и дашборд
@@ -360,10 +361,12 @@ CRM-system/
 Контракты	❌	❌	✅	✅
 Активные клиенты	❌	❌	✅	✅
 Статистика рекламы	✅	✅	✅	✅
-REST API
+
+#### REST API
+
 Базовый URL
 text
-https://crm.company.com/api/v1/
+http://127.0.0.1/api/v1/
 Эндпоинты
 Ресурс	Метод	URL	Описание
 Услуги	GET	/products/	Список услуг
@@ -414,7 +417,7 @@ json
 ]
 Создать нового лида
 bash
-curl -X POST https://crm.company.com/api/v1/leads/ \
+curl -X POST http://127.0.0.1/api/v1/leads/ \
   -H "Content-Type: application/json" \
   -d '{
     "first_name": "Иван",
@@ -454,7 +457,7 @@ Swagger UI
 Интерактивная документация доступна по адресу:
 
 text
-https://crm.company.com/api/docs/
+http://127.0.0.1/api/docs/
 Здесь вы можете:
 
 Просматривать все эндпоинты
@@ -469,4 +472,4 @@ OpenAPI Schema
 Машиночитаемая спецификация:
 
 text
-https://crm.company.com/api/schema/
+http://127.0.0.1/api/schema/
