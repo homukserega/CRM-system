@@ -16,10 +16,10 @@ dependencies = [
     "gunicorn[standard]>=26.0.0",
     "django-unused-media>=0.2.2",
     "djangorestframework>=3.16.1",
-    'drf_spectacular',
+    "drf_spectacular",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "pylint>=4.0.6,<5.0.0",
     "pylint-django>=2.8.0",

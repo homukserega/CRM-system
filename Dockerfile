@@ -22,7 +22,7 @@ COPY pyproject.toml ./
 # Создаём виртуальное окружение и устанавливаем зависимости без группы dev
 RUN uv venv /venv && \
     . /venv/bin/activate && \
-    uv sync --no-dev --no-lock --no-interaction
+    uv sync --no-dev --no-interaction
 
 # ---- Этап 2: Финальный образ ----
 FROM python:3.12-alpine
