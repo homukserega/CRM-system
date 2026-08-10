@@ -5,25 +5,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('contracts', '0001_initial'),
+        ("contracts", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contract',
-            name='end_date',
+            model_name="contract",
+            name="end_date",
             field=models.DateField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='start_date',
+            model_name="contract",
+            name="start_date",
             field=models.DateField(default=django.utils.timezone.now),
         ),
         migrations.AlterField(
-            model_name='contract',
-            name='uploaded_at',
+            model_name="contract",
+            name="uploaded_at",
             field=models.DateField(auto_now_add=True),
         ),
     ]

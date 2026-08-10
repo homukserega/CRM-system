@@ -5,26 +5,38 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('ads', '0001_initial'),
+        ("ads", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Lead',
+            name="Lead",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(blank=True, max_length=255)),
-                ('last_name', models.CharField(blank=True, max_length=255)),
-                ('phone', models.CharField(blank=True, max_length=20, null=True, unique=True)),
-                ('email', models.EmailField(blank=True, max_length=255, unique=True)),
-                ('ad', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='ad', to='ads.ad')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("first_name", models.CharField(blank=True, max_length=255)),
+                ("last_name", models.CharField(blank=True, max_length=255)),
+                ("phone", models.CharField(blank=True, max_length=20, null=True, unique=True)),
+                ("email", models.EmailField(blank=True, max_length=255, unique=True)),
+                (
+                    "ad",
+                    models.ForeignKey(
+                        blank=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="ad",
+                        to="ads.ad",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Leads',
+                "verbose_name_plural": "Leads",
             },
         ),
     ]

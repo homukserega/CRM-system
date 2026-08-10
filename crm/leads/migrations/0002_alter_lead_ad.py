@@ -5,16 +5,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('ads', '0001_initial'),
-        ('leads', '0001_initial'),
+        ("ads", "0001_initial"),
+        ("leads", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='lead',
-            name='ad',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='ad', to='ads.ad'),
+            model_name="lead",
+            name="ad",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="ad",
+                to="ads.ad",
+            ),
         ),
     ]

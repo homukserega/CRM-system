@@ -5,25 +5,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('products', '0001_initial'),
+        ("products", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Ad',
+            name="Ad",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(db_index=True, max_length=255)),
-                ('promotion', models.CharField(blank=True, max_length=255, null=True)),
-                ('budget', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('product', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='product', to='products.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("name", models.CharField(db_index=True, max_length=255)),
+                ("promotion", models.CharField(blank=True, max_length=255, null=True)),
+                ("budget", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        blank=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="product",
+                        to="products.product",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Ads',
+                "verbose_name_plural": "Ads",
             },
         ),
     ]

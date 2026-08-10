@@ -1,5 +1,5 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
@@ -13,7 +13,8 @@ class Contract(models.Model):
 
     class Meta:
         """Дополнительные настройки модели."""
-        verbose_name_plural = 'Contracts'
+
+        verbose_name_plural = "Contracts"
 
     name = models.CharField(max_length=255, null=True, blank=True)
     product = models.ForeignKey(
@@ -22,7 +23,7 @@ class Contract(models.Model):
         blank=True,
         on_delete=models.CASCADE,
     )
-    file = models.FileField(upload_to='documents/%Y/%m/%d/')
+    file = models.FileField(upload_to="documents/%Y/%m/%d/")
     uploaded_at = models.DateField(auto_now_add=True)
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)
@@ -37,7 +38,7 @@ class Contract(models.Model):
 
     def get_absolute_url(self) -> str:
         """Возвращает абсолютный URL для просмотра деталей контракта."""
-        return reverse('contracts:detail', args=[str(self.pk)])
+        return reverse("contracts:detail", args=[str(self.pk)])
 
     def is_active(self) -> bool:
         """Проверяет, активен ли контракт (не истёк)."""

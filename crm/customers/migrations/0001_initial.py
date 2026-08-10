@@ -5,24 +5,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('contracts', '0001_initial'),
-        ('leads', '0001_initial'),
+        ("contracts", "0001_initial"),
+        ("leads", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Customer',
+            name="Customer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('contract', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='contract', to='contracts.contract')),
-                ('customer', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='customer', to='leads.lead')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                (
+                    "contract",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="contract",
+                        to="contracts.contract",
+                    ),
+                ),
+                (
+                    "customer",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="customer",
+                        to="leads.lead",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Customers',
+                "verbose_name_plural": "Customers",
             },
         ),
     ]

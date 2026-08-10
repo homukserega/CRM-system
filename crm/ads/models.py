@@ -1,11 +1,11 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.urls import reverse
 
 
 class Ad(models.Model):
     class Meta:
-        verbose_name_plural = 'Ads'
+        verbose_name_plural = "Ads"
 
     name = models.CharField(max_length=255, blank=False, null=False, db_index=True)
     product = models.ForeignKey(
@@ -21,4 +21,4 @@ class Ad(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('ads:detail', args=[str(self.pk)])
+        return reverse("ads:detail", args=[str(self.pk)])

@@ -1,11 +1,11 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.urls import reverse
 
 
 class Lead(models.Model):
     class Meta:
-        verbose_name_plural = 'Leads'
+        verbose_name_plural = "Leads"
 
     first_name = models.CharField(max_length=255, null=False, blank=True)
     last_name = models.CharField(max_length=255, null=False, blank=True)
@@ -23,4 +23,4 @@ class Lead(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     def get_absolute_url(self):
-        return reverse('leads:detail', args=[str(self.pk)])
+        return reverse("leads:detail", args=[str(self.pk)])

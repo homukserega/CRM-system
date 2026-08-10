@@ -6,28 +6,40 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('products', '0001_initial'),
+        ("products", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Contract',
+            name="Contract",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(blank=True, max_length=255, null=True)),
-                ('file', models.FileField(upload_to='documents/%Y/%m/%d/')),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
-                ('start_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('end_date', models.DateTimeField(blank=True, null=True)),
-                ('cost', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('product', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='contract', to='products.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("name", models.CharField(blank=True, max_length=255, null=True)),
+                ("file", models.FileField(upload_to="documents/%Y/%m/%d/")),
+                ("uploaded_at", models.DateTimeField(auto_now_add=True)),
+                ("start_date", models.DateTimeField(default=django.utils.timezone.now)),
+                ("end_date", models.DateTimeField(blank=True, null=True)),
+                ("cost", models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        blank=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="contract",
+                        to="products.product",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Contracts',
+                "verbose_name_plural": "Contracts",
             },
         ),
     ]
