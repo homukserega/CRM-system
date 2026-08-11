@@ -1,3 +1,5 @@
+from decimal import Decimal
+from django.core.validators import MinValueValidator
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -26,7 +28,11 @@ class Contract(models.Model):
     uploaded_at = models.DateField(auto_now_add=True)
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    cost = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
+    )
 
     def __str__(self) -> str:
         """

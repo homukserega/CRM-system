@@ -1,3 +1,5 @@
+from decimal import Decimal
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse
 
@@ -8,7 +10,12 @@ class Product(models.Model):
 
     name = models.CharField(max_length=255, blank=False, null=False, db_index=True)
     description = models.TextField(null=True, blank=True)
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    cost = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.00'))],
+
+    )
 
     def __str__(self):
         return self.name
