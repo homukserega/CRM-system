@@ -4,7 +4,7 @@ from django.db.models.deletion import ProtectedError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiExample
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
@@ -24,6 +24,36 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     http_method_names = ["get", "post", "put", "delete"]
     permission_classes = [DjangoModelPermissions]
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
+                'Создание услуги',
+                value={
+                    "name": 'Ваша реклама',
+                    "description": "Новая реклама",
+                    "cost": 1500.50,
+                }, request_only=True,
+            )
+        ]
+    )
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
+                'Обновление услуги',
+                value={
+                    "name": "Новое название",
+                }, request_only=True,
+            )
+        ]
+    )
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
 
 
 class ProductListView(PermissionRequiredMixin, ListView):

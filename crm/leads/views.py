@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiExample
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
@@ -25,6 +25,35 @@ class LeadViewSet(ModelViewSet):
     serializer_class = LeadSerializer
     http_method_names = ["get", "post", "put", "delete"]
     permission_classes = [DjangoModelPermissions]
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
+                'Создание Потенциального клиента',
+                value={
+                    "first_name": 'Имя',
+                    "last_name": "Фамилия",
+                    "phone": "5000000",
+                    "email": "example@enmail.com",
+                }, request_only=True,
+            )
+        ]
+    )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
+                'Обновление Потенциального клиента',
+                value={
+                    "first_name": 'Имя',
+                }, request_only=True,
+            )
+        ]
+    )
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
 
 
 class LeadListView(PermissionRequiredMixin, ListView):

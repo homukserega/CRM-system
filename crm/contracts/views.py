@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiExample
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
@@ -23,6 +23,39 @@ class ContractViewSet(ModelViewSet):
     serializer_class = ContractSerializer
     http_method_names = ["get", "post", "put", "delete"]
     permission_classes = [DjangoModelPermissions]
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
+                'Создание контракта',
+                value={
+                    "name": 'Контракт 1',
+                    "product": 1,
+                    "file": "путь/к/файлу.doc",
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "cost": 5000.30,
+                }, request_only=True,
+            )
+        ]
+    )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
+                'Обновление контракта',
+                value={
+                    "cost": 6000.00,
+                    "end_data": "2026-06-02"
+                }, request_only=True,
+            )
+        ]
+    )
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
 
 
 class ContractListView(PermissionRequiredMixin, ListView):
