@@ -12,9 +12,8 @@ class ProductSerializer(serializers.ModelSerializer):
         max_digits=10,
         min_value=0,
         decimal_places=2,
-        max_value=99999999.99,
-        help_text="Стоимость товара (от 0 до 99 999 999.99)",
-        example=1500.50
+        max_value=99999999,
+        help_text="Стоимость товара (от 0 до 99 999 999.99). Пример: 1500.00.",
     )
 
     class Meta:
