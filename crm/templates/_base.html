@@ -63,7 +63,7 @@
                     <hr>
                 </li>
                 <li>
-                    <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
+                    <form action="{% url 'registration:logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
                         <button type="submit" class="bar-item text-decoration-none px-3 py-3 d-block" style="background:none; border:none; width:100%; text-align:left; color: rgb(85, 83, 83);">
                             <span><i class="fas fa-sign-out-alt"></i></span><span class="px-1"> Выход</span>
@@ -72,10 +72,10 @@
                 </li>
             {% else %}
                 <!-- Меню для неавторизованных пользователей -->
-                <li><a href="{% url 'accounts:login' %}" class="bar-item text-decoration-none px-3 py-3 d-block">
+                <li><a href="{% url 'registration:login' %}" class="bar-item text-decoration-none px-3 py-3 d-block">
                     <span><i class="fas fa-sign-in-alt"></i></span><span class="px-1"> Вход</span>
                 </a></li>
-                <li><a href="{% url 'accounts:register' %}" class="bar-item text-decoration-none px-3 py-3 d-block">
+                <li><a href="{% url 'registration:register' %}" class="bar-item text-decoration-none px-3 py-3 d-block">
                     <span><i class="fas fa-user-plus"></i></span><span class="px-1"> Регистрация</span>
                 </a></li>
             {% endif %}

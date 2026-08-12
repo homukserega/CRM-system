@@ -85,7 +85,7 @@ INSTALLED_APPS = [
     # 'debug_toolbar',
     "rest_framework",
     "drf_spectacular",
-    "accounts.apps.AccountsConfig",
+    "registration.apps.RegistrationConfig",
     "products.apps.ProductsConfig",
     "contracts.apps.ContractsConfig",
     "ads.apps.AdsConfig",
@@ -182,9 +182,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # LOGIN_REDIRECT_URL = reverse_lazy("registration:about-me")
 # LOGIN_URL = reverse_lazy("registration:login")
 
-LOGIN_URL = "accounts:login"  # или просто 'login', если не используете пространство имён
+LOGIN_URL = "registration:login"  # или просто 'login', если не используете пространство имён
 LOGIN_REDIRECT_URL = "home"  # имя главной страницы (определено в корневом urls.py)
-LOGOUT_REDIRECT_URL = "accounts:login"  # перенаправление после выхода (опционально)
+LOGOUT_REDIRECT_URL = "registration:login"  # перенаправление после выхода (опционально)
 
 LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
 
