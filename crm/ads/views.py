@@ -41,10 +41,16 @@ class AdViewSet(ModelViewSet):
         examples=[
             OpenApiExample(
                 'Получение списка рекламных кампаний',
-            )
+                value=(
+                    {"name": 'Crm-System', "product": 1,
+                    "promotion": "Telegram", "budget": 1500.50},
+                    {"name": 'Yandex Disk', "product": 2,
+                     "promotion": "Instagram", "budget": 500.50},
+                ), response_only=True,
+            ),
         ]
     )
-    def get(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
     @extend_schema(

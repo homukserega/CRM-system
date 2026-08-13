@@ -22,7 +22,7 @@ load_dotenv()
 POSTGRES_DB = os.getenv("POSTGRES_DB", "admin-db")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "admin")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "admin")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "db")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_INT_PORT = os.getenv("POSTGRES_INT_PORT", 5432)
 
 # Database
