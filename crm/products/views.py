@@ -26,14 +26,37 @@ class ProductViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
 
     @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Одна услуга в списке',
+            value=({"name": 'Ваша реклама', "description": "Новая реклама", "cost": 1500.50,}),
+            response_only=True,
+              ),
+         ]
+    )
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Одна услуга',
+            value={"name": 'Ваша реклама', "description": "Новая реклама", "cost": 1500.50,},
+            response_only=True,
+            ),
+        ]
+    )
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @extend_schema(
         examples=[
             OpenApiExample(
                 'Создание услуги',
-                value={
-                    "name": 'Ваша реклама',
-                    "description": "Новая реклама",
-                    "cost": 1500.50,
-                }, request_only=True,
+                value={"name": 'Ваша реклама', "description": "Новая реклама", "cost": 1500.50,},
+                request_only=True,
             )
         ]
     )
@@ -45,9 +68,8 @@ class ProductViewSet(ModelViewSet):
         examples=[
             OpenApiExample(
                 'Обновление услуги',
-                value={
-                    "name": "Новое название",
-                }, request_only=True,
+                value={"name": "Новое название"},
+                request_only=True,
             )
         ]
     )
