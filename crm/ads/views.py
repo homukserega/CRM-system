@@ -40,6 +40,16 @@ class AdViewSet(ModelViewSet):
     @extend_schema(
         examples=[
             OpenApiExample(
+                'Получение списка рекламных кампаний',
+            )
+        ]
+    )
+    def get(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
+    @extend_schema(
+        examples=[
+            OpenApiExample(
                 'Создание рекламной кампании',
                 value={
                     "name": 'Crm-System',
