@@ -13,7 +13,7 @@ from django.db.models import (
 )
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from drf_spectacular.utils import extend_schema, OpenApiExample
+from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
@@ -41,12 +41,12 @@ class AdViewSet(ModelViewSet):
     examples=[
         OpenApiExample(
             'Одна кампания в списке',
-            value=({"name": "Google Ads", "product": 3, "promotion": "Google", "budget": "2000.00"}),
+            value=({"name": "Google Ads", "product": 3,
+                    "promotion": "Google", "budget": "2000.00"}),
             response_only=True,
               ),
          ]
     )
-
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -54,12 +54,12 @@ class AdViewSet(ModelViewSet):
     examples=[
         OpenApiExample(
             'Одна кампания',
-            value={"name": "Google Ads", "product": 3, "promotion": "Google", "budget": "2000.00"},
+            value={"name": "Google Ads", "product": 3,
+                   "promotion": "Google", "budget": "2000.00"},
             response_only=True,
             ),
         ]
     )
-
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
@@ -90,7 +90,6 @@ class AdViewSet(ModelViewSet):
             )
         ]
     )
-
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
@@ -118,8 +117,11 @@ class AdListView(PermissionRequiredMixin, ListView):
             .values("cnt")
         )
         return Ad.objects.annotate(
-            leads_count=Subquery(leads_count, output_field=IntegerField()),
-            customers_count=Subquery(customers_count, output_field=IntegerField()),
+            leads_count=Subquery(
+                leads_count,
+                output_field=IntegerField()),
+                customers_count=Subquery(customers_count,
+                output_field=IntegerField()),
         )
 
 
@@ -194,10 +196,13 @@ class AdStatisticView(PermissionRequiredMixin, ListView):
         )
 
         return Ad.objects.annotate(
-            leads_count=Subquery(leads_count, output_field=IntegerField()),
-            customers_count=Subquery(customers_count, output_field=IntegerField()),
-            total_contract_sum=Subquery(
-                total_contract_cost, output_field=DecimalField(max_digits=10, decimal_places=2)
+            leads_count=Subquery(
+                leads_count, output_field=IntegerField()),
+                customers_count=Subquery(
+                    customers_count, output_field=IntegerField()),
+                    total_contract_sum=Subquery(
+                        total_contract_cost, output_field=DecimalField(
+                            max_digits=10, decimal_places=2)
             ),
         ).annotate(
             # Прибыль (доход - расход)

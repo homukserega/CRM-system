@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from drf_spectacular.utils import extend_schema, OpenApiExample
+from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.viewsets import ModelViewSet
 
@@ -38,7 +38,6 @@ class ContractViewSet(ModelViewSet):
             ),
         ]
     )
-
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
@@ -58,7 +57,6 @@ class ContractViewSet(ModelViewSet):
             ),
         ]
     )
-
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
@@ -91,7 +89,6 @@ class ContractViewSet(ModelViewSet):
             )
         ]
     )
-
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
