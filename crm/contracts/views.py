@@ -25,6 +25,44 @@ class ContractViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
 
     @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Один контракт в списке',
+            value=({"name": 'Контракт 1',
+                    "product": 1,
+                    "file": "путь/к/файлу.doc",
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "cost": 5000.30}),
+            response_only=True,
+            ),
+        ]
+    )
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Один контракт',
+            value={
+                    "name": 'Контракт 1',
+                    "product": 1,
+                    "file": "путь/к/файлу.doc",
+                    "start_date": "2025-01-01",
+                    "end_date": "2025-12-31",
+                    "cost": 5000.30,
+            },
+            response_only=True,
+            ),
+        ]
+    )
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @extend_schema(
         examples=[
             OpenApiExample(
                 'Создание контракта',

@@ -38,20 +38,30 @@ class AdViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
 
     @extend_schema(
-        examples=[
-            OpenApiExample(
-                'Получение списка рекламных кампаний',
-                value=(
-                    {"name": 'Crm-System', "product": 1,
-                    "promotion": "Telegram", "budget": 1500.50},
-                    {"name": 'Yandex Disk', "product": 2,
-                     "promotion": "Instagram", "budget": 500.50},
-                ), response_only=True,
+    examples=[
+        OpenApiExample(
+            'Одна кампания в списке',
+            value=({"name": "Google Ads", "product": 3, "promotion": "Google", "budget": "2000.00"}),
+            response_only=True,
+              ),
+         ]
+    )
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Одна кампания',
+            value={"name": "Google Ads", "product": 3, "promotion": "Google", "budget": "2000.00"},
+            response_only=True,
             ),
         ]
     )
-    def list(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
 
     @extend_schema(
         examples=[
