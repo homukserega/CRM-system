@@ -27,6 +27,42 @@ class LeadViewSet(ModelViewSet):
     permission_classes = [DjangoModelPermissions]
 
     @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Один потенциальный клиент в списке',
+            value=({
+                    "first_name": 'Имя',
+                    "last_name": "Фамилия",
+                    "phone": "5000000",
+                    "email": "example@enmail.com",
+                }),
+            response_only=True,
+              ),
+         ]
+    )
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @extend_schema(
+    examples=[
+        OpenApiExample(
+            'Одна клиент',
+            value={
+                    "first_name": 'Имя',
+                    "last_name": "Фамилия",
+                    "phone": "5000000",
+                    "email": "example@enmail.com",
+                },
+            response_only=True,
+            ),
+        ]
+    )
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @extend_schema(
         examples=[
             OpenApiExample(
                 'Создание Потенциального клиента',
