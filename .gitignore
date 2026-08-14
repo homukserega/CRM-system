@@ -141,6 +141,4 @@ dmypy.json
 # Jetbrains Intellij IDEA
 .idea/
 
-collect_proj_files.py
-collect_proj_files.txt
-make_files_list_from_collect_proj_files_txt.py
+collect_proj_files.*
